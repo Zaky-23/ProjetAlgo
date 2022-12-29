@@ -16,4 +16,6 @@ void InsertNode(Tree** Root, const std::string& Value);
 Tree* GetNode(Tree** Root, const std::string& Key);
 void RemoveNode(Tree** Root, const std::string& Key);
 void PrintTree(Tree** Root);
+Tree* InOrderSucessor(Tree** Root);
+Tree* InOrdderPredecessor(Tree** Root);
 size_t NumberOfDecendants(Tree* Node);

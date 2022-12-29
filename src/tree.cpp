@@ -134,7 +134,24 @@ void RemoveNode(Tree** Root, const std::string& Key)
 		Previous->Right = nullptr;
 		delete Current;
 		break;
-		
+	// Has one sub-tree
+	case 1:
+		if(Previous->Left == Current)
+		{
+			Previous->Left = Current->Left;
+			if(Current->Right != nullptr) Previous->Left = Current->Right;
+			delete Current;
+			break;
+		}
+		Previous->Left = Current->Left;
+		if(Current->Right != nullptr) Previous->Left = Current->Right;
+		Previous->Right = nullptr;
+		delete Current;
+		break;
+	
+	// Has two
+	case 2:
+	// TODO implement
 	default:
 		return;
 	}
@@ -152,6 +169,18 @@ void PrintTree(Tree** Root)
 	PrintTree(&Current->Left);
 	std::cout << Current->Data << '\n';
 	PrintTree(&Current->Right);
+}
+
+Tree* InOrderSucessor(Tree** Root)
+{
+	// TODO
+	return nullptr;
+}
+
+Tree* InOrdderPredecessor(Tree** Root)
+{
+	// TODO
+	return nullptr;
 }
 
 size_t NumberOfDecendants(Tree * Node)

@@ -1,51 +1,29 @@
-#include <fstream>
 #include <iostream>
-#include <sstream>
 #include <string>
+#include <fstream>
 
-#include "../incl/tree.hpp"
+#include "../incl/string-parsing.hpp"
 
-static const char* FILE_PATH = "input/sample.txt";
+
 
 int main()
-{	
-	#pragma region File IO
-	// // text a traiter
-	// std::string Text;
-	// // std::ios::in == read_mode
-	// std::ifstream File;
-	// // attraper les erreurs
-	// File.exceptions(std::ios::failbit | std::ios::badbit);
-	// try {
-	// 	File.open(FILE_PATH, std::ios::in);
+{
+	const char* FILE_PATH = "input/sample.txt";
+	const char PATTERNS[] = {'.', ',', ':', ';', '\n', '!', '?'};
 
-	// 	// buffer chaine de caractere
-	// 	std::stringstream StringBuffer;
-	// 	StringBuffer << File.rdbuf();
+	auto v = Parse::ExtractWordsFromFileMod(FILE_PATH, PATTERNS, true);
 
-	// 	File.close();
+	std::vector<std::string> Buffer;
 
-	// 	Text = StringBuffer.str();
-	// } catch(std::ifstream::failure error) {
-	// 	std::cout << "Error: " << error.what() << '\n';
-	// 	return -1;
+	for(auto& e : v)
+	{
+		std::cout << e;
+	}
+
+	// for(auto& e : v)
+	// {
+	// 	std::cout << e << '\n';
 	// }
-
-	// std::cout << Text << std::endl;
-	#pragma endregion
-
-	Tree** Root = nullptr;
-	Tree* Node = CreateNode("Hi");
-	Root = &Node;
-
-	InsertNode(Root, "Hello");
-	InsertNode(Root, "Hellooo");
-	InsertNode(Root, "Heo");
-	InsertNode(Root, "Hllo");
-
-	RemoveNode(Root, "Hllo");
-
-	PrintTree(Root);
 
 	return 0;
 }

@@ -31,3 +31,6 @@ app.exe
 CMakeCache.txt
 cmake_install.cmake
 Makefile
+CMakeFiles/app.exe.dir/compiler_depend.internal
+CMakeFiles/app.exe.dir/src/string-parsing.cpp.o
+CMakeFiles/app.exe.dir/src/string-parsing.cpp.o.d

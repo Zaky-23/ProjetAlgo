@@ -4,26 +4,21 @@
 
 #include "../incl/string-parsing.hpp"
 
-
-
 int main()
 {
-	const char* FILE_PATH = "input/sample.txt";
-	const char PATTERNS[] = {'.', ',', ':', ';', '\n', '!', '?'};
+	const std::string FILE_PATH = "input/sample.txt";
+	const std::string PATTERNS = "\"'.,:;\n!?";
+	const std::string WARNING(""
+		"******************************************************\n"
+		"THIS PROGRAM DOES NOT DETECT UNICODE/SPECIALCHARACTERS\n"
+		"PLEASE VERIFY THE INPUT FILE BEFORE PROCEDING\n"
+		"******************************************************");
 
-	auto v = Parse::ExtractWordsFromFileMod(FILE_PATH, PATTERNS, true);
+	std::cout << WARNING << '\n';
 
-	std::vector<std::string> Buffer;
+	std::set<std::string> ParsedWords = Parse::ExtractWordsFromFileMod(FILE_PATH, PATTERNS);
 
-	for(auto& e : v)
-	{
-		std::cout << e;
-	}
-
-	// for(auto& e : v)
-	// {
-	// 	std::cout << e << '\n';
-	// }
+	Parse::PrintWords(ParsedWords);
 
 	return 0;
 }

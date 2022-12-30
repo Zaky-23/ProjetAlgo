@@ -87,3 +87,11 @@ std::set<std::string> Parse::ExtractWordsFromFileMod(const std::string& Path, co
 
 	return Result;
 }
+
+void Parse::PrintWords(std::set<std::string> Words)
+{
+	for(const std::string& word : Words)
+	{
+		std::cout << word << '\n';
+	}
+}

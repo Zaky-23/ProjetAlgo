@@ -112,6 +112,8 @@ int main()
 			{
 				std::cout << pos << ' ';
 			}
+
+			std::cout << '\n';
 		}
 
 		else 

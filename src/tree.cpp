@@ -2,28 +2,27 @@
 
 Tree* CreateNode(const std::string& Value) 
 {
-	return new Tree {.Right = nullptr, .Left = nullptr, .Data = Value};
+	return new Tree {.Right = nullptr, .Left = nullptr, .Key = Value, .Occurences = {0}};
 }
 
-void InsertNode(Tree** Root, const std::string& Value)
+void InsertNode(Tree** Root, const std::string& Value, const std::set<size_t>& WordOccurences)
 {
 	if(Root == nullptr) 
 	{
-		std::cout << "InsertNodeAt(nullptr, \"" << Value << "\"" << "): 'nullptr' Root" << '\n';
+		*Root = CreateNode(Value);
 		return;
 	}
 
 	Tree* Current = *Root;
 
 	Tree* NewNode = CreateNode(Value);
+	NewNode->Occurences = WordOccurences;
 
 	while (1)
 	{
-		int Difference = Current->Data.compare(Value);
+		int Difference = Current->Key.compare(Value);
 
 		if(Difference == 0) {
-			Current->Data;
-			std::cout << "Value already exists" << '\n';
 			return;
 
 		} else if(Difference > 0) {
@@ -49,7 +48,6 @@ Tree* GetNode(Tree** Root, const std::string& Key)
 {	
 	if(Root == nullptr) 
 	{
-		std::cout << "GetNode(nullptr, \"" << Key << "\"): 'nullptr' Root" << '\n';
 		return nullptr;
 	}
 
@@ -57,7 +55,7 @@ Tree* GetNode(Tree** Root, const std::string& Key)
 
 	while(Current != nullptr)
 	{
-		int Difference = Current->Data.compare(Key);
+		int Difference = Current->Key.compare(Key);
 
 		if(Difference == 0) {
 			return Current;
@@ -71,90 +69,7 @@ Tree* GetNode(Tree** Root, const std::string& Key)
 		}
 	}
 
-	if(Current == nullptr)
-		std::cout << "Value not found" << '\n';
-
 	return Current;
-}
-
-void RemoveNode(Tree** Root, const std::string& Key)
-{
-	if(Root == nullptr) 
-	{
-		std::cout << "GetNode(nullptr, \"" << Key << "\"): 'nullptr' Root" << '\n';
-		return;
-	}
-
-	if(GetNode(Root, Key) == nullptr)
-	{
-		std::cout << "RemoveNode(Root, \"" << Key << "\"): 'Value' not found" << '\n';
-		return;
-	}
-
-	// Search for the Value
-	// Case 1: Value doesn't exist
-	// Case 2: Value is found
-	// Case 3: The value is on the left (< 0)
-	// Case 4: The value is on the right (> 0)
-
-	Tree* Current = *Root;
-	Tree* Previous = nullptr;
-
-	while(Current != nullptr)
-	{
-		int Difference = Current->Data.compare(Key);
-
-		if(Difference == 0) {
-			break;
-
-		} else if(Difference > 0) {
-			if(Current->Right == nullptr) break;
-			Previous = Current;
-			Current = Current->Right;
-
-		} else {
-			if(Current->Left == nullptr) break;
-			Previous = Current;
-			Current = Current->Left;
-
-		}
-	}
-
-	switch(NumberOfDecendants(Current))
-	{
-	// Delete a leaf
-	case 0:
-		if(Previous->Left == Current)
-		{
-			Previous->Left = nullptr;
-			delete Current;
-			break;
-		}
-
-		Previous->Right = nullptr;
-		delete Current;
-		break;
-	// Has one sub-tree
-	case 1:
-		if(Previous->Left == Current)
-		{
-			Previous->Left = Current->Left;
-			if(Current->Right != nullptr) Previous->Left = Current->Right;
-			delete Current;
-			break;
-		}
-		Previous->Left = Current->Left;
-		if(Current->Right != nullptr) Previous->Left = Current->Right;
-		Previous->Right = nullptr;
-		delete Current;
-		break;
-	
-	// Has two
-	case 2:
-	// TODO implement
-	default:
-		return;
-	}
 }
 
 void PrintTree(Tree** Root)
@@ -167,27 +82,6 @@ void PrintTree(Tree** Root)
 	}
 
 	PrintTree(&Current->Left);
-	std::cout << Current->Data << '\n';
+	std::cout << Current->Key << '\n';
 	PrintTree(&Current->Right);
-}
-
-Tree* InOrderSucessor(Tree** Root)
-{
-	// TODO
-	return nullptr;
-}
-
-Tree* InOrdderPredecessor(Tree** Root)
-{
-	// TODO
-	return nullptr;
-}
-
-size_t NumberOfDecendants(Tree * Node)
-{
-	size_t Num = 0;
-	if(Node->Right != nullptr) Num++;
-	if(Node->Left != nullptr) Num++;
- 
-	return Num;
 }

@@ -1,21 +1,18 @@
 #pragma once
 
 #include <iostream>
+#include <set>
 #include <string>
-
-static const std::string NOT_FOUND = "**NotFound**";
+#include <vector>
 
 typedef struct Tree {
 	Tree* Right;
 	Tree* Left;
-	std::string Data;
+	std::string Key;
+	std::set<size_t> Occurences;
 }Tree;
 
 Tree* CreateNode(const std::string& Value);
-void InsertNode(Tree** Root, const std::string& Value);
+void InsertNode(Tree** Root, const std::string& Value, const std::set<size_t>& WordOccurences);
 Tree* GetNode(Tree** Root, const std::string& Key);
-void RemoveNode(Tree** Root, const std::string& Key);
 void PrintTree(Tree** Root);
-Tree* InOrderSucessor(Tree** Root);
-Tree* InOrdderPredecessor(Tree** Root);
-size_t NumberOfDecendants(Tree* Node);

@@ -38,3 +38,14 @@ std::set<size_t> FindPosOccurences(const std::vector<std::string>& Phrases, cons
 
 	return Result;
 }
+
+bool FindPhrase(const std::string& Phrase, const std::vector<std::string>& Phrases)
+{
+	for (const std::string& p : Phrases)
+	{
+		if (p.find(Phrase) != std::string::npos)
+			return true;
+	}
+
+	return false;
+}

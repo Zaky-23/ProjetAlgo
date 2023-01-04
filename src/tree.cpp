@@ -2,14 +2,13 @@
 
 Tree* CreateNode(const std::string& Value) 
 {
-	return new Tree {.Right = nullptr, .Left = nullptr, .Key = Value, .Occurences = {0}};
+	return new Tree {nullptr, nullptr, Value, {0}};
 }
 
 void InsertNode(Tree** Root, const std::string& Value, const std::set<size_t>& WordOccurences)
 {
 	if(Root == nullptr) 
 	{
-		*Root = CreateNode(Value);
 		return;
 	}
 

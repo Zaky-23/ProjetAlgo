@@ -1,25 +1,30 @@
+#include <fstream>
 #include <iostream>
 #include <string>
-#include <fstream>
 
 #include "../incl/string-parsing.hpp"
 #include "../incl/tree.hpp"
 #include "../incl/utils.hpp"
-
 
 int main()
 {
 	const std::string FILE_PATH("input/sample.txt");
 	const std::string PATTERNS("\".,:;\n!?");
 
-	std::vector<std::string> ParsedPhrases = Parse::ExtractPhrasesFromFile(FILE_PATH);
-	std::set<std::string> ParsedWords = Parse::ExtractWordsFromFile(FILE_PATH, PATTERNS);
+	std::vector<std::string> ParsedPhrases = ExtractPhrasesFromFile(FILE_PATH);
+
+	//for (auto p : ParsedPhrases)
+	//{
+	//	std::cout << p << '\n';
+	//}
+
+	std::set<std::string> ParsedWords = ExtractWordsFromFile(FILE_PATH, PATTERNS);
 
 	Tree** Root = nullptr;
 	Tree* FirstNode = CreateNode("");
 	Root = &FirstNode;
 
-	for(const auto& word : ParsedWords)
+	for(const std::string& word : ParsedWords)
 	{
 		std::set<size_t> WordOccurenes = FindPosOccurences(ParsedPhrases, word);
 		InsertNode(Root, word, WordOccurenes);
@@ -29,6 +34,7 @@ int main()
 	std::cout << "Commands:\n" 
 	<< "!(q)uit: To quit\n"
 	<< "!(e)xist: To check if a word exists\n"
+	<< "!(p)hrase exist: To check if a phrase exists\n"
 	<< "!(f)ind: To research the phrase(s) where a word occured\n"
 	<< "!(i)ntersction: To check the intersection of two words\n";
 
@@ -36,10 +42,10 @@ int main()
 	{
 		std::cin >> InputBuffer;
 
-		if(InputBuffer == "!q" || InputBuffer == "!quit")
+		if(InputBuffer == "!q")
 			break;
 
-		else if(InputBuffer == "!f" || InputBuffer == "!find")
+		else if(InputBuffer == "!f")
 		{
 			std::cout << "Enter the word you want to search: ";
 			std::cin >> InputBuffer;
@@ -61,7 +67,7 @@ int main()
 			continue;
 		}
 
-		else if(InputBuffer == "!e" || InputBuffer == "!exist")
+		else if(InputBuffer == "!e")
 		{
 			std::cout << "Enter the word you want to check: ";
 			std::cin >> InputBuffer;
@@ -76,7 +82,7 @@ int main()
 			std::cout << "This word exists" << '\n';
 		}
 
-		else if(InputBuffer == "!i" || InputBuffer == "!intersection")
+		else if(InputBuffer == "!i")
 		{
 			std::cout << "Enter the first word: ";
 			std::string Word1;
@@ -116,9 +122,20 @@ int main()
 			std::cout << '\n';
 		}
 
-		else 
+		else if (InputBuffer == "!p")
 		{
-			std::cout << "Unknow command\n";
+			std::cout << "Enter the phrase you want to search: ";
+			std::string Buffer;
+			std::cin >> Buffer;
+
+			if (FindPhrase(Buffer, ParsedPhrases))
+			{
+				std::cout << "The phrase exists" << '\n';
+				continue;
+			}
+
+			std::cout << "This phrase does not exist" << '\n';
+			
 		}
 	}
 
